@@ -1,10 +1,12 @@
 import 'dart:convert';
 import 'package:catalog/model/catalog.dart';
-import 'package:catalog/widgets/drawer.dart';
-import 'package:catalog/widgets/items.dart';
+import 'package:catalog/widgets/home_widgets/CatalogHeader.dart';
+import 'package:catalog/widgets/home_widgets/CatalogList.dart';
+import 'package:catalog/widgets/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
+import 'package:velocity_x/velocity_x.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -19,7 +21,6 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     loadData();
   }
@@ -41,27 +42,23 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: Text("Catalog App",
-        style: TextStyle(
-          color: Colors.black,
-          fontWeight: FontWeight.bold,
-        ),),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(12.0),
-        child: (CatalogModel.items != null && CatalogModel.items.isNotEmpty)?
-        ListView.builder(
-            itemCount: CatalogModel.items.length,
-            itemBuilder: (context, index){
-              return ItemWidget(item: CatalogModel.items[index]);
-            },
-        ):Center(
-          child: CircularProgressIndicator(),
+      backgroundColor: MyTheme.cream,
+      body: SafeArea(
+        child: Container(
+          padding: Vx.m32,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              CatalogHeader(),
+
+              if(CatalogModel.items != null && CatalogModel.items.isNotEmpty)
+                CatalogList().py16().expand()
+              else
+                CircularProgressIndicator().centered().expand(),
+            ],
         ),
+       ),
       ),
-      drawer: MyDrawer(),
     );
   }
 }
