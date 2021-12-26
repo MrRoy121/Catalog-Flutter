@@ -1,8 +1,8 @@
 import 'package:catalog/model/catalog.dart';
+import 'package:catalog/screens/cartpage.dart';
 import 'package:catalog/screens/homedetails.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import '../theme.dart';
 import 'CatalogImage.dart';
 import 'package:velocity_x/velocity_x.dart';
 
@@ -48,7 +48,7 @@ class CatalogItem extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  catalog.name.text.bold.lg.color(MyTheme.bluish).make(),
+                  catalog.name.text.bold.lg.color(context.accentColor).make(),
                   catalog.desc.text.textStyle(context.captionStyle).make(),
                   10.heightBox,
                   ButtonBar(
@@ -57,15 +57,20 @@ class CatalogItem extends StatelessWidget {
                     children: [
                       "\$${catalog.price}".text.bold.xl.make(),
                       ElevatedButton(
-                        onPressed: () {},
-                        style: ButtonStyle(
-                            backgroundColor: MaterialStateProperty.all(
-                              MyTheme.bluish,
+                        onPressed: () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => CartPage(
+
+                              ),
                             ),
+                          ),
+                        style: ButtonStyle(
+                            backgroundColor: MaterialStateProperty.all(context.theme.buttonColor,),
                             shape: MaterialStateProperty.all(
                               StadiumBorder(),
                             )),
-                        child: "Buy".text.make(),
+                        child: "Add To Cart".text.make(),
                       )
                     ],
                   ).pOnly(right: 8.0)
@@ -74,6 +79,6 @@ class CatalogItem extends StatelessWidget {
             ),
           ],
         )
-    ).white.rounded.square(150).make().py16();
+    ).color(context.cardColor).rounded.square(150).make().py16();
   }
 }

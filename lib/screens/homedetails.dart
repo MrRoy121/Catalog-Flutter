@@ -4,6 +4,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:velocity_x/velocity_x.dart';
 
+import 'cartpage.dart';
+
 
 
 class HomeDetails extends StatelessWidget {
@@ -16,25 +18,32 @@ class HomeDetails extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      backgroundColor: MyTheme.cream,
+      backgroundColor: context.canvasColor,
       bottomNavigationBar: Container(
-        color: Colors.white,
+        color: context.cardColor,
         child: ButtonBar(
           alignment: MainAxisAlignment.spaceBetween,
           buttonPadding: EdgeInsets.zero,
           children: [
             "\$${catalog.price}".text.bold.xl4.red800.make(),
             ElevatedButton(
-              onPressed: () {},
+              onPressed: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => CartPage(
+
+                  ),
+                ),
+              ),
               style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all(
-                    MyTheme.bluish,
+                    context.theme.buttonColor,
                   ),
                   shape: MaterialStateProperty.all(
                     StadiumBorder(),
                   )),
-              child: "Buy".text.make(),
-            ).wh(100, 50)
+              child: "Add To Cart".text.make(),
+            ).wh(120, 50)
           ],
         ).p32(),
       ),
@@ -57,11 +66,13 @@ class HomeDetails extends StatelessWidget {
                     child: Column(
                       children: [
                         catalog.name.text.xl4
-                            .color(MyTheme.bluish)
+                            .color(context.accentColor)
                             .bold
                             .make(),
                         catalog.desc.text.textStyle(context.captionStyle).xl.make(),
                         10.heightBox,
+                        "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate"
+                          .text.align(TextAlign.justify).textStyle(context.captionStyle).make().px16()
                       ],
                     ).py64(),
                   ),

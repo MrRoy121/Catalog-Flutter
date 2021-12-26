@@ -3,6 +3,7 @@ import 'package:catalog/model/catalog.dart';
 import 'package:catalog/widgets/home_widgets/CatalogHeader.dart';
 import 'package:catalog/widgets/home_widgets/CatalogList.dart';
 import 'package:catalog/widgets/theme.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
@@ -42,7 +43,15 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: MyTheme.cream,
+      floatingActionButton: FloatingActionButton(
+        onPressed: (){
+
+        },
+        child: Icon(CupertinoIcons.cart),
+        backgroundColor: context.theme.buttonColor,
+      ),
+
+      backgroundColor: context.canvasColor,
       body: SafeArea(
         child: Container(
           padding: Vx.m32,
