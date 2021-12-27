@@ -1,3 +1,4 @@
+import 'package:catalog/model/cart.dart';
 import 'package:catalog/model/catalog.dart';
 import 'package:catalog/widgets/theme.dart';
 import 'package:flutter/cupertino.dart';
@@ -26,24 +27,7 @@ class HomeDetails extends StatelessWidget {
           buttonPadding: EdgeInsets.zero,
           children: [
             "\$${catalog.price}".text.bold.xl4.red800.make(),
-            ElevatedButton(
-              onPressed: () => Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => CartPage(
-
-                  ),
-                ),
-              ),
-              style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(
-                    context.theme.buttonColor,
-                  ),
-                  shape: MaterialStateProperty.all(
-                    StadiumBorder(),
-                  )),
-              child: "Add To Cart".text.make(),
-            ).wh(120, 50)
+            ButtonClass(catalog: catalog),
           ],
         ).p32(),
       ),
@@ -81,5 +65,42 @@ class HomeDetails extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+class ButtonClass extends StatefulWidget {
+
+  final Item catalog;
+  const ButtonClass({Key? key, required this.catalog}) : super(key: key);
+  @override
+  State<ButtonClass> createState() => _ButtonClassState();
+}
+
+class _ButtonClassState extends State<ButtonClass> {
+
+  bool isadded = false;
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+      onPressed: () {
+        isadded = isadded.toggle();
+
+        final _catalog = CatalogModel();
+        final _cart = CartClass();
+        _cart.catalog = _catalog;
+        _cart.add(widget.catalog);
+        setState(() {
+
+        });
+      },
+      style: ButtonStyle(
+          backgroundColor: MaterialStateProperty.all(
+            context.theme.buttonColor,
+          ),
+          shape: MaterialStateProperty.all(
+            StadiumBorder(),
+          )),
+      child: isadded ? Icon(Icons.done) : "Add To Cart".text.make(),
+    ).wh(120, 50);
   }
 }
